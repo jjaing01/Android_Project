@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">페어 게임</string>
+    <string name="restart_dialog_title">재시작할래?</string>
+    <string name="restart_dialog_message">정말 다시할래?</string>
+    <string name="common_yes">응</string>
+    <string name="common_no">아니</string>
+</resources>
