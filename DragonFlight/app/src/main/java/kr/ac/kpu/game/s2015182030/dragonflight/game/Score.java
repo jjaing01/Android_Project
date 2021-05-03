@@ -16,27 +16,30 @@ public class Score implements GameObject {
 
     public void setScore(int score) {
         this.score = score;
+        this.displayScore = score;
     }
 
     public void addScore(int amount) {
         this.score += amount;
     }
 
-    private int score;
+    private int score, displayScore;
 
-    public Score(int right, int top){
+    public Score(int right, int top) {
         bitmap = GameBitmap.load(R.mipmap.number_24x32);
         this.right = right;
         this.top = top;
     }
     @Override
     public void update() {
-
+        if(displayScore < score){
+            displayScore++;
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        int value = this.score;
+        int value = this.displayScore;
         int nw = bitmap.getWidth() / 10;
         int nh = bitmap.getHeight();
         Rect src = new Rect();
