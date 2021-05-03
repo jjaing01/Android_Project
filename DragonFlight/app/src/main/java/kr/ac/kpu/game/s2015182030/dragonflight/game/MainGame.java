@@ -18,6 +18,7 @@ public class MainGame {
     // singleton
     private static MainGame instance;
     private Player player;
+    private Score score;
 
     public static MainGame get() {
         if (instance == null) {
@@ -48,7 +49,7 @@ public class MainGame {
     }
 
     public enum Layer{
-        enemy, bullet, player, controller, ENEMY_COUNT
+        enemy, bullet, player, ui, controller, ENEMY_COUNT;
     }
     public boolean initResources() {
         if (initialized) {
@@ -66,6 +67,11 @@ public class MainGame {
 
         //objects.add(new EnemyGenerator());
         add(Layer.controller,new EnemyGenerator());
+
+        int margin = (int)(20 * GameView.MULTIPLIER);
+        score = new Score(w - margin, margin);
+        score.setScore(123459);
+        add(Layer.ui, score);
 
         initialized = true;
         return true;
@@ -90,12 +96,18 @@ public class MainGame {
         ArrayList<GameObject> bullets = layers.get(Layer.bullet.ordinal());
         for(GameObject o1 : enemies) {
             Enemy enemy = (Enemy) o1;
+            boolean collided = false;
             for(GameObject o2 : bullets) {
                 Bullet bullet = (Bullet) o2;
                 if (CollisionHelper.collides(enemy, bullet)){
                     remove(enemy);
                     remove(bullet);
+                    collided = true;
+                    break;
                 }
+            }
+            if(collided){
+                break;
             }
         }
 
