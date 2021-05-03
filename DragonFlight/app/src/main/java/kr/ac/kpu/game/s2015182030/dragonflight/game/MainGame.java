@@ -70,7 +70,7 @@ public class MainGame {
 
         int margin = (int)(20 * GameView.MULTIPLIER);
         score = new Score(w - margin, margin);
-        score.setScore(123459);
+        score.setScore(0);
         add(Layer.ui, score);
 
         initialized = true;
@@ -102,6 +102,7 @@ public class MainGame {
                 if (CollisionHelper.collides(enemy, bullet)){
                     remove(enemy);
                     remove(bullet);
+                    score.addScore(10);
                     collided = true;
                     break;
                 }

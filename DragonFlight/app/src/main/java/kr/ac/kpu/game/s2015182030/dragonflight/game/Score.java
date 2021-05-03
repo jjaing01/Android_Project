@@ -18,6 +18,10 @@ public class Score implements GameObject {
         this.score = score;
     }
 
+    public void addScore(int amount) {
+        this.score += amount;
+    }
+
     private int score;
 
     public Score(int right, int top){
