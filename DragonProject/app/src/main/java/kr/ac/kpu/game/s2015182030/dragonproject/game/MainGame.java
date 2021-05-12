@@ -52,7 +52,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, enemy, bullet, player, bg2, ui, controller, ENEMY_COUNT
+        bg1, monsterBullet, enemy, bullet, player, bg2, ui, controller, ENEMY_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -96,6 +96,8 @@ public class MainGame {
 
         ArrayList<GameObject> enemies = layers.get(Layer.enemy.ordinal());
         ArrayList<GameObject> bullets = layers.get(Layer.bullet.ordinal());
+        ArrayList<GameObject> monsterBullets = layers.get(Layer.monsterBullet.ordinal());
+
         for (GameObject o1 : enemies) {
             Enemy enemy = (Enemy) o1;
             boolean collided = false;

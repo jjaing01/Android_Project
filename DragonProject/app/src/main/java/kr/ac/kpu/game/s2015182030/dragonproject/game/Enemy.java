@@ -12,19 +12,28 @@ import kr.ac.kpu.game.s2015182030.dragonproject.framework.Recyclable;
 import kr.ac.kpu.game.s2015182030.dragonproject.ui.view.GameView;
 
 public class Enemy implements GameObject, BoxCollidable, Recyclable {
+    private static final int BULLET_SPEED = 1500;
+    private static final float FIRE_INTERVAL = 1.0f / 1.5f;
+    private static final float LASER_DURATION = FIRE_INTERVAL / 3;
     private static final float FRAMES_PER_SECOND = 8.0f;
+
     private static final int[] RESOURCE_IDS = {
             R.mipmap.enemy01, R.mipmap.enemy02, R.mipmap.enemy03,
             R.mipmap.boss01, R.mipmap.boss02, R.mipmap.boss03,
     };
 
     private GameBitmap bitmap;
+    private GameBitmap fireBitmap;
+
     private int level;
     private float x,y;
     private int speed;
     private int hp,maxHp;
     private static final String TAG = Enemy.class.getSimpleName();
     private boolean isDead;
+
+    private float fireTime;
+
 
     private Enemy() {
         //Log.d(TAG,"Enemy constructor");
@@ -48,6 +57,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         this.y = y;
         this.speed = speed;
         this.level = level;
+        this.fireTime = 0.0f;
+        this.fireBitmap = new GameBitmap(R.mipmap.monbullet);
 
         // Normal Monster
         if(level < 4) {
@@ -77,6 +88,12 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         return isDead;
     }
 
+    private void fireBullet() {
+        MonsterBullet bullet = MonsterBullet.get(this.x, this.y, BULLET_SPEED);
+        MainGame game = MainGame.get();
+        game.add(MainGame.Layer.monsterBullet, bullet);
+    }
+
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getBoundingRect(x, y, rect);
@@ -92,6 +109,13 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
             if ( x <= 0 || x > GameView.view.getWidth()) {
                 speed *= -1.0;
+            }
+
+            fireTime += game.frameTime;
+
+            if (fireTime >= FIRE_INTERVAL) {
+                fireBullet();
+                fireTime -= FIRE_INTERVAL;
             }
         }
         // Normal Monster
@@ -109,6 +133,10 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void draw(Canvas canvas) {
         if(level == 4) {
             bitmap.drawSize(canvas,x,y,2);
+
+            if (fireTime < LASER_DURATION) {
+                fireBitmap.draw(canvas, x, y - 50);
+            }
         }
         // Normal Monster
         else {
