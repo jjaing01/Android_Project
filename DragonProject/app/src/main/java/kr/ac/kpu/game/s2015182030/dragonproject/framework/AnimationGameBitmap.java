@@ -1,13 +1,7 @@
 package kr.ac.kpu.game.s2015182030.dragonproject.framework;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.RectF;
-
-import kr.ac.kpu.game.s2015182030.dragonproject.ui.view.GameView;
 
 public class AnimationGameBitmap extends GameBitmap {
     private final int imageWidth;
@@ -44,8 +38,25 @@ public class AnimationGameBitmap extends GameBitmap {
 
         int fw = frameWidth;
         int h = imageHeight;
-        float hw = fw / 2 * GameView.MULTIPLIER;
-        float hh = h / 2 * GameView.MULTIPLIER;
+//        float hw = fw / 2 * GameView.MULTIPLIER;
+//        float hh = h / 2 * GameView.MULTIPLIER;
+        float hw = fw / 2 * 4;
+        float hh = h / 2 * 4;
+
+        srcRect.set(fw * frameIndex, 0, fw * frameIndex + fw, h);
+        dstRect.set(x - hw, y - hh, x + hw, y + hh);
+        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+    }
+
+    public void drawSize(Canvas canvas, float x, float y, int size) {
+        int elapsed = (int)(System.currentTimeMillis() - createdOn);
+        frameIndex = Math.round(elapsed * 0.001f * framesPerSecond) % frameCount;
+
+        int fw = frameWidth;
+        int h = imageHeight;
+
+        float hw = fw / 2 * size;
+        float hh = h / 2 * size;
 
         srcRect.set(fw * frameIndex, 0, fw * frameIndex + fw, h);
         dstRect.set(x - hw, y - hh, x + hw, y + hh);

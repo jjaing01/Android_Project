@@ -43,6 +43,18 @@ public class GameBitmap {
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
 
+    public void drawSize(Canvas canvas, float x, float y,int size) {
+        int hw = getWidth() / 2;
+        int hh = getHeight() / 2;
+
+        float dl = x - hw * GameView.MULTIPLIER;
+        float dt = y - hh * GameView.MULTIPLIER;
+        float dr = x + hw * GameView.MULTIPLIER;
+        float db = y + hh * GameView.MULTIPLIER;
+        dstRect.set(dl, dt, dr, db);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
+    }
+
     public int getHeight() {
         return bitmap.getHeight();
     }

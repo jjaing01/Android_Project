@@ -2,7 +2,6 @@ package kr.ac.kpu.game.s2015182030.dragonproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.game.s2015182030.dragonproject.R;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.AnimationGameBitmap;
@@ -19,15 +18,16 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             R.mipmap.boss01, R.mipmap.boss02, R.mipmap.boss03,
     };
 
-    private float x;
     private GameBitmap bitmap;
     private int level;
-    private float y;
+    private float x,y;
     private int speed;
+    private int hp,maxHp;
     private static final String TAG = Enemy.class.getSimpleName();
+    private boolean isDead;
 
     private Enemy() {
-        Log.d(TAG,"Enemy constructor");
+        //Log.d(TAG,"Enemy constructor");
     }
 
     public static Enemy get(int level, int x, int y, int speed) {
@@ -49,9 +49,32 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         this.speed = speed;
         this.level = level;
 
+        // Normal Monster
+        if(level < 4) {
+            this.hp = 10;
+            this.maxHp = 10;
+        }
+        // First Boss
+       else if(level >= 4) {
+            this.hp = 1000;
+            this.maxHp = 1000;
+        }
+
         int resId = RESOURCE_IDS[level - 1];
 
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
+    }
+
+    public void decreaseHp(int hp) {
+        this.hp -= hp;
+        if(this.hp <= 0) {
+            this.hp = 0;
+            isDead = true;
+        }
+    }
+
+    public boolean getDead() {
+        return isDead;
     }
 
     @Override
@@ -62,16 +85,35 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void update() {
         MainGame game = MainGame.get();
-        y += speed * game.frameTime;
 
-        if (y > GameView.view.getHeight()) {
-            game.remove(this);
+        // First Boss
+        if(level == 4) {
+            x += speed * game.frameTime;
+
+            if ( x <= 0 || x > GameView.view.getWidth()) {
+                speed *= -1.0;
+            }
         }
+        // Normal Monster
+        else {
+            y += speed * game.frameTime;
+
+            if (y > GameView.view.getHeight()) {
+                game.remove(this);
+            }
+        }
+
     }
 
     @Override
     public void draw(Canvas canvas) {
-        bitmap.draw(canvas, x, y);
+        if(level == 4) {
+            bitmap.drawSize(canvas,x,y,2);
+        }
+        // Normal Monster
+        else {
+            bitmap.draw(canvas, x, y);
+        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package kr.ac.kpu.game.s2015182030.dragonproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.game.s2015182030.dragonproject.R;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.BoxCollidable;

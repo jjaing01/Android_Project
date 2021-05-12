@@ -73,7 +73,7 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
 
-        HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.scene01, 10);
+        HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.scene01, 100);
         add(Layer.bg1, bg);
 
         initialized = true;
@@ -101,9 +101,16 @@ public class MainGame {
             boolean collided = false;
             for (GameObject o2 : bullets) {
                 Bullet bullet = (Bullet) o2;
+
                 if (CollisionHelper.collides(enemy, bullet)) {
+                    if(enemy.getDead() == false) {
+                        enemy.decreaseHp(10);
+                    }
+                    else {
+                        remove(enemy, false);
+                    }
+
                     remove(bullet, false);
-                    remove(enemy, false);
                     score.addScore(10);
                     collided = true;
                     break;
