@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.kpu.game.s2015182030.dragonproject.R;
+import kr.ac.kpu.game.s2015182030.dragonproject.framework.AnimationGameBitmap;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameObject;
@@ -13,6 +14,7 @@ public class Player implements GameObject, BoxCollidable {
     private static final int BULLET_SPEED = 1500;
     private static final float FIRE_INTERVAL = 1.0f / 7.5f;
     private static final float LASER_DURATION = FIRE_INTERVAL / 3;
+    private static final float FRAMES_PER_SECOND = 8.0f;
 
     private GameBitmap planeBitmap;
     private GameBitmap fireBitmap;
@@ -35,12 +37,14 @@ public class Player implements GameObject, BoxCollidable {
         this.tx = x;
         this.ty = 0;
         this.speed = 800;
-        this.planeBitmap = new GameBitmap(R.mipmap.player);
+
+        this.planeBitmap = new AnimationGameBitmap(R.mipmap.player,FRAMES_PER_SECOND,4);
         this.fireBitmap = new GameBitmap(R.mipmap.bullet01);
         this.fireBitmap2 = new GameBitmap(R.mipmap.bullet02);
         this.fireBitmap3 = new GameBitmap(R.mipmap.bullet03);
         this.fireBitmap4 = new GameBitmap(R.mipmap.bullet04);
         this.fireBitmap5 = new GameBitmap(R.mipmap.bullet05);
+
         this.fireTime = 0.0f;
     }
 

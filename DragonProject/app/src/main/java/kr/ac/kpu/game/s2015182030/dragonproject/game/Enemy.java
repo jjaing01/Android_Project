@@ -51,7 +51,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
         int resId = RESOURCE_IDS[level - 1];
 
-        this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 0);
+        this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
     }
 
     @Override
