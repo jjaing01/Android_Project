@@ -3,6 +3,8 @@ package kr.ac.kpu.game.s2015182030.dragonproject.game;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import java.util.Random;
+
 import kr.ac.kpu.game.s2015182030.dragonproject.R;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.AnimationGameBitmap;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.BoxCollidable;
@@ -31,8 +33,10 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     private int hp,maxHp;
     private static final String TAG = Enemy.class.getSimpleName();
     private boolean isDead;
+    private boolean isMakeItem;
 
     private float fireTime;
+
 
 
     private Enemy() {
@@ -59,6 +63,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         this.level = level;
         this.fireTime = 0.0f;
         this.fireBitmap = new GameBitmap(R.mipmap.monbullet);
+        this.isDead = false;
+        this.isMakeItem = false;
 
         // Normal Monster
         if(level < 4) {
@@ -72,7 +78,6 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         }
 
         int resId = RESOURCE_IDS[level - 1];
-
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
     }
 
@@ -94,6 +99,16 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         game.add(MainGame.Layer.monsterBullet, bullet);
     }
 
+    private void createItem() {
+        Random r = new Random();
+        int level = r.nextInt(4) + 1;
+
+        Item item = Item.get(level,this.x, this.y, 1500);
+
+        MainGame game = MainGame.get();
+        game.add(MainGame.Layer.item, item);
+    }
+
     @Override
     public void getBoundingRect(RectF rect) {
         bitmap.getBoundingRect(x, y, rect);
@@ -102,6 +117,14 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void update() {
         MainGame game = MainGame.get();
+
+        if(isDead) {
+            if(isMakeItem == false){
+                createItem();
+                isMakeItem = true;
+            }
+
+        }
 
         // First Boss
         if(level == 4) {
@@ -112,7 +135,6 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             }
 
             fireTime += game.frameTime;
-
             if (fireTime >= FIRE_INTERVAL) {
                 fireBullet();
                 fireTime -= FIRE_INTERVAL;
@@ -133,14 +155,10 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void draw(Canvas canvas) {
         if(level == 4) {
             bitmap.drawSize(canvas,x,y,2);
-
-            if (fireTime < LASER_DURATION) {
-                fireBitmap.draw(canvas, x, y - 50);
-            }
         }
         // Normal Monster
         else {
-            bitmap.draw(canvas, x, y);
+            bitmap.drawSize(canvas, x, y,4);
         }
     }
 

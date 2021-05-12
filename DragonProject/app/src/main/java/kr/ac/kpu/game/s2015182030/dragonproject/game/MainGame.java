@@ -52,7 +52,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, monsterBullet, enemy, bullet, player, bg2, ui, controller, ENEMY_COUNT
+        bg1, enemy, bullet, player, monsterBullet, item, ui, controller, ENEMY_COUNT
     }
     public boolean initResources() {
         if (initialized) {

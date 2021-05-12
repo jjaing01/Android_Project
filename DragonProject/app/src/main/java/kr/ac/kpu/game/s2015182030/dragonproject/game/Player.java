@@ -87,7 +87,7 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void draw(Canvas canvas) {
-        planeBitmap.draw(canvas, x, y);
+        planeBitmap.drawSize(canvas, x, y,3);
 
         if (fireTime < LASER_DURATION) {
             fireBitmap.draw(canvas, x, y - 50);

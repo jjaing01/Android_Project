@@ -3,6 +3,8 @@ package kr.ac.kpu.game.s2015182030.dragonproject.framework;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import kr.ac.kpu.game.s2015182030.dragonproject.ui.view.GameView;
+
 public class AnimationGameBitmap extends GameBitmap {
     private final int imageWidth;
     private final int imageHeight;
@@ -38,10 +40,8 @@ public class AnimationGameBitmap extends GameBitmap {
 
         int fw = frameWidth;
         int h = imageHeight;
-//        float hw = fw / 2 * GameView.MULTIPLIER;
-//        float hh = h / 2 * GameView.MULTIPLIER;
-        float hw = fw / 2 * 4;
-        float hh = h / 2 * 4;
+        float hw = fw / 2 * GameView.MULTIPLIER;
+        float hh = h / 2 * GameView.MULTIPLIER;
 
         srcRect.set(fw * frameIndex, 0, fw * frameIndex + fw, h);
         dstRect.set(x - hw, y - hh, x + hw, y + hh);
