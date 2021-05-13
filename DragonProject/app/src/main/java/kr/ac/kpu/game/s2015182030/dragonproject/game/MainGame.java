@@ -168,6 +168,25 @@ public class MainGame {
             }
         }
 
+        // player - monster bullet
+        for (GameObject o1 : monsterBullets) {
+            MonsterBullet monBullet = (MonsterBullet) o1;
+            boolean collided = false;
+
+            if (CollisionHelper.collides(monBullet, player)) {
+                player.setLife(-1);
+                remove(monBullet, false);
+                collided = true;
+                break;
+            }
+
+            if (collided) {
+                break;
+            }
+        }
+
+
+
 
     }
 
