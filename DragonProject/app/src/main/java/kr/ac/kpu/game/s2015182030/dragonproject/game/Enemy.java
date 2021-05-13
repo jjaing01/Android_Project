@@ -103,7 +103,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         Random r = new Random();
         int level = r.nextInt(4) + 1;
 
-        Item item = Item.get(level,this.x, this.y, 1500);
+        Item item = Item.get(level, this.x, this.y, 1500);
 
         MainGame game = MainGame.get();
         game.add(MainGame.Layer.item, item);

@@ -26,10 +26,13 @@ public class Player implements GameObject, BoxCollidable {
     private float fireTime;
 
     private float speed;
-    private float ty;
-    private float tx;
-    private float x;
-    private float y;
+    private float tx,ty;
+    private float x,y;
+
+    private int bulletLevel;
+    private int life;
+    private int bulletNum;
+    private int coin;
 
     public Player(float x, float y) {
         this.x = x;
@@ -38,18 +41,48 @@ public class Player implements GameObject, BoxCollidable {
         this.ty = 0;
         this.speed = 2000;
 
-        this.planeBitmap = new AnimationGameBitmap(R.mipmap.player,FRAMES_PER_SECOND,4);
-        this.fireBitmap = new GameBitmap(R.mipmap.bullet01);
-        this.fireBitmap2 = new GameBitmap(R.mipmap.bullet02);
-        this.fireBitmap3 = new GameBitmap(R.mipmap.bullet03);
-        this.fireBitmap4 = new GameBitmap(R.mipmap.bullet04);
-        this.fireBitmap5 = new GameBitmap(R.mipmap.bullet05);
+        this.life = 3;
+        this.bulletLevel = 1;
+        this.bulletNum = 1;
+        this.coin = 0;
 
+        this.planeBitmap = new AnimationGameBitmap(R.mipmap.player,FRAMES_PER_SECOND,4);
         this.fireTime = 0.0f;
     }
 
     public void moveTo(float x, float y) {
         this.tx = x;
+    }
+
+    public void setCoin(int n) {
+        this.coin += n;
+    }
+
+    public void setLife(int n) {
+        this.life += n;
+
+        if(this.life > 3)
+            this.life = 3;
+        if(this.life < 1)
+            this.life = 0;
+    }
+
+    public void setBulletLevel(int n) {
+        this.bulletLevel += n;
+
+        if(this.bulletLevel > 5)
+            this.bulletLevel = 5;
+        if(this.bulletLevel < 1)
+            this.bulletLevel = 1;
+    }
+
+    public void setBulletNum(int n) {
+        this.bulletNum += n;
+
+        if(this.bulletNum > 2)
+            this.bulletNum = 2;
+        if(this.bulletNum < 1)
+            this.bulletNum = 1;
     }
 
     @Override
@@ -80,18 +113,23 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     private void fireBullet() {
-        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED);
         MainGame game = MainGame.get();
-        game.add(MainGame.Layer.bullet, bullet);
+
+        if(this.bulletNum > 1) {
+            Bullet bullet1 = Bullet.get(this.bulletLevel, this.x - 50, this.y, BULLET_SPEED);
+            game.add(MainGame.Layer.bullet, bullet1);
+
+            Bullet bullet2 = Bullet.get(this.bulletLevel, this.x + 50, this.y, BULLET_SPEED);
+            game.add(MainGame.Layer.bullet, bullet2);
+        }
+        else {
+            Bullet bullet = Bullet.get(this.bulletLevel, this.x, this.y, BULLET_SPEED);
+            game.add(MainGame.Layer.bullet, bullet);
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
         planeBitmap.drawSize(canvas, x, y,3);
-
-        if (fireTime < LASER_DURATION) {
-            fireBitmap.draw(canvas, x, y - 50);
-        }
-
     }
 }

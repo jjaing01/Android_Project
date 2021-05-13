@@ -97,10 +97,13 @@ public class MainGame {
         ArrayList<GameObject> enemies = layers.get(Layer.enemy.ordinal());
         ArrayList<GameObject> bullets = layers.get(Layer.bullet.ordinal());
         ArrayList<GameObject> monsterBullets = layers.get(Layer.monsterBullet.ordinal());
+        ArrayList<GameObject> items = layers.get(Layer.item.ordinal());
 
+        // Collide Enemy - Bullet
         for (GameObject o1 : enemies) {
             Enemy enemy = (Enemy) o1;
             boolean collided = false;
+
             for (GameObject o2 : bullets) {
                 Bullet bullet = (Bullet) o2;
 
@@ -122,6 +125,41 @@ public class MainGame {
                 break;
             }
         }
+
+        // Collide Player - Item
+        for (GameObject o1 : items) {
+            Item item = (Item) o1;
+            boolean collided = false;
+
+            if (CollisionHelper.collides(item, player)) {
+                // 0: coin, 1:DualShot, 2:bullet Level, 3: Life
+                int itemLev = item.getLevel();
+
+                switch (itemLev) {
+                    case 0:
+                        player.setCoin(1);
+                        break;
+                    case 1:
+                        player.setBulletNum(1);
+                        break;
+                    case 2:
+                        player.setBulletLevel(1);
+                        break;
+                    case 3:
+                        player.setLife(1);
+                        break;
+                }
+                remove(item, false);
+                collided = true;
+                break;
+            }
+
+            if (collided) {
+                break;
+            }
+        }
+
+
     }
 
     public void draw(Canvas canvas) {

@@ -33,7 +33,7 @@ public class EnemyGenerator implements GameObject {
 
     private void generate() {
         wave++;
-        Log.d(TAG,"wave:"+wave);
+        //Log.d(TAG,"wave:"+wave);
 
         MainGame game = MainGame.get();
         int tenth = GameView.view.getWidth() / 10;

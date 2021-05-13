@@ -11,35 +11,90 @@ import kr.ac.kpu.game.s2015182030.dragonproject.framework.Recyclable;
 
 public class Bullet implements GameObject, BoxCollidable, Recyclable {
     private static final String TAG = Bullet.class.getSimpleName();
-    private float x;
-    private final GameBitmap bitmap;
-    private float y;
+    private float x,y;
+    private GameBitmap bitmap;
+    private int level;
     private int speed;
+    private int power;
+    private int size;
 
-    private Bullet(float x, float y, int speed) {
+    private static final int[] RESOURCE_IDS = {
+            R.mipmap.bullet01, R.mipmap.bullet02, R.mipmap.bullet03, R.mipmap.bullet04, R.mipmap.bullet05,
+    };
+
+    private Bullet(int level, float x, float y, int speed) {
         this.x = x;
         this.y = y;
         this.speed = -speed;
+        this.level = level;
 
-        this.bitmap = new GameBitmap(R.mipmap.bullet01);
+        if(this.level == 1) {
+            this.power = 10;
+            this.size = 4;
+        }
+        else if(this.level == 2) {
+            this.power = 30;
+            this.size = 4;
+        }
+        else if(this.level == 3) {
+            this.power = 50;
+            this.size = 4;
+        }
+        else if(this.level == 4) {
+            this.power = 100;
+            this.size = 5;
+        }
+        else if(this.level == 5) {
+            this.power = 150;
+            this.size = 5;
+        }
+
+        //this.bitmap = new GameBitmap(R.mipmap.bullet01);
+        int resId = RESOURCE_IDS[level - 1];
+        this.bitmap = new GameBitmap(resId);
     }
 
-    public static Bullet get(float x, float y, int speed) {
+    public static Bullet get(int level, float x, float y, int speed) {
         MainGame game = MainGame.get();
         Bullet bullet = (Bullet) game.get(Bullet.class);
 
         if (bullet == null) {
-            return new Bullet(x, y, speed);
+            return new Bullet(level, x, y, speed);
         }
 
-        bullet.init(x, y, speed);
+        bullet.init(level, x, y, speed);
         return bullet;
     }
 
-    private void init(float x, float y, int speed) {
+    private void init(int level, float x, float y, int speed) {
         this.x = x;
         this.y = y;
         this.speed = -speed;
+        this.level = level;
+
+        if(this.level == 1) {
+            this.power = 10;
+            this.size = 4;
+        }
+        else if(this.level == 2) {
+            this.power = 30;
+            this.size = 4;
+        }
+        else if(this.level == 3) {
+            this.power = 50;
+            this.size = 4;
+        }
+        else if(this.level == 4) {
+            this.power = 100;
+            this.size = 5;
+        }
+        else if(this.level == 5) {
+            this.power = 150;
+            this.size = 5;
+        }
+
+        int resId = RESOURCE_IDS[level - 1];
+        this.bitmap = new GameBitmap(resId);
     }
 
     @Override
@@ -60,6 +115,19 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
+
+        if(this.level == 1 || this.level == 2) {
+            bitmap.drawSize(canvas, x, y,2);
+        }
+        else if(this.level == 3) {
+            bitmap.drawSize(canvas, x, y,3);
+        }
+        else if(this.level == 4) {
+            bitmap.drawSize(canvas, x, y,4);
+        }
+        else if(this.level == 5) {
+            bitmap.drawSize(canvas, x, y,4);
+        }
     }
 
     @Override
