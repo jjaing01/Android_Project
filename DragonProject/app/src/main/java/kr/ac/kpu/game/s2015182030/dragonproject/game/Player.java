@@ -17,11 +17,6 @@ public class Player implements GameObject, BoxCollidable {
     private static final float FRAMES_PER_SECOND = 8.0f;
 
     private GameBitmap planeBitmap;
-    private GameBitmap fireBitmap;
-    private GameBitmap fireBitmap2;
-    private GameBitmap fireBitmap3;
-    private GameBitmap fireBitmap4;
-    private GameBitmap fireBitmap5;
 
     private float fireTime;
 

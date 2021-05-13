@@ -21,6 +21,7 @@ public class MainGame {
     private static MainGame instance;
     private Player player;
     private Score score;
+    private Money money;
 
     public static MainGame get() {
         if (instance == null) {
@@ -68,10 +69,18 @@ public class MainGame {
         add(Layer.player, player);
         add(Layer.controller, new EnemyGenerator());
 
+        // score ui
         int margin = (int) (20 * GameView.MULTIPLIER);
         score = new Score(w - margin, margin);
         score.setScore(0);
         add(Layer.ui, score);
+
+        // money ui
+        int marginTop = (int) (10 * GameView.MULTIPLIER);
+        int marginRight = (int) (80 * GameView.MULTIPLIER);
+        money = new Money(0 + marginRight, marginTop);
+        money.setMoney(0);
+        add(Layer.ui, money);
 
         HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.scene01, 100);
         add(Layer.bg1, bg);
@@ -137,7 +146,7 @@ public class MainGame {
 
                 switch (itemLev) {
                     case 0:
-                        player.setCoin(1);
+                        money.addMoney(100);
                         break;
                     case 1:
                         player.setBulletNum(1);
