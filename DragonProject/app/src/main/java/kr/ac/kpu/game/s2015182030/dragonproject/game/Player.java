@@ -8,6 +8,7 @@ import kr.ac.kpu.game.s2015182030.dragonproject.framework.AnimationGameBitmap;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameObject;
+import kr.ac.kpu.game.s2015182030.dragonproject.ui.view.GameView;
 
 public class Player implements GameObject, BoxCollidable {
     private static final String TAG = Player.class.getSimpleName();
@@ -16,7 +17,11 @@ public class Player implements GameObject, BoxCollidable {
     private static final float LASER_DURATION = FIRE_INTERVAL / 3;
     private static final float FRAMES_PER_SECOND = 8.0f;
 
+    private static final int w = GameView.view.getWidth();
+    private static final int h = GameView.view.getHeight();
+
     private GameBitmap planeBitmap;
+    private GameBitmap lifeBitmap;
 
     private float fireTime;
 
@@ -42,6 +47,7 @@ public class Player implements GameObject, BoxCollidable {
         this.coin = 0;
 
         this.planeBitmap = new AnimationGameBitmap(R.mipmap.player,FRAMES_PER_SECOND,4);
+        this.lifeBitmap = new GameBitmap(R.mipmap.hp);
         this.fireTime = 0.0f;
     }
 
@@ -125,6 +131,10 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void draw(Canvas canvas) {
+        for(int i=0; i<this.life; ++i) {
+            lifeBitmap.draw(canvas,w/2.5f + (i * 100),h - 100);
+        }
+
         planeBitmap.drawSize(canvas, x, y,3);
     }
 }
