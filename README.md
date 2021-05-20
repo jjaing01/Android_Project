@@ -27,3 +27,11 @@
 > ![Alt text](/Image/design.PNG)
 ---------------------------------------------------------------------------
 ### 4. Commit Log
+> **4주차** Commit : 5회
+> > ![Alt text](/Image/4w.PNG)
+
+> **5주차** Commit : 12회
+> > ![Alt text](/Image/5w.PNG)
+
+> **6주차** Commit : 4회
+> > ![Alt text](/Image/6w.PNG)
