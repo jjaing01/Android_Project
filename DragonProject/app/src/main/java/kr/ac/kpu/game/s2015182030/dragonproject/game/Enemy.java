@@ -137,6 +137,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             fireTime += game.frameTime;
             if (fireTime >= FIRE_INTERVAL) {
                 fireBullet();
+                
                 fireTime -= FIRE_INTERVAL;
             }
         }
