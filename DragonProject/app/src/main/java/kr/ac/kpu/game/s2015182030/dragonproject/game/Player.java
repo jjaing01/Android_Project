@@ -71,9 +71,9 @@ public class Player implements GameObject, BoxCollidable {
     public void setBulletLevel(int n) {
         this.bulletLevel += n;
 
-        if(this.bulletLevel > 5)
+        if(this.bulletLevel >= 5)
             this.bulletLevel = 5;
-        if(this.bulletLevel < 1)
+        if(this.bulletLevel <= 1)
             this.bulletLevel = 1;
     }
 

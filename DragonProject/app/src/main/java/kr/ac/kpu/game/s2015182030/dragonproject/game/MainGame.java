@@ -118,7 +118,7 @@ public class MainGame {
 
                 if (CollisionHelper.collides(enemy, bullet)) {
                     if(enemy.getDead() == false) {
-                        enemy.decreaseHp(10);
+                        enemy.decreaseHp(bullet.getBulletDamage());
                     }
                     else {
                         remove(enemy, false);

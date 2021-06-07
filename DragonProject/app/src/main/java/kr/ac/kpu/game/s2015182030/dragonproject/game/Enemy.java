@@ -25,7 +25,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     };
 
     private GameBitmap bitmap;
-    private GameBitmap fireBitmap;
+    private AnimationGameBitmap hpBitmap;
+    //private GameBitmap fireBitmap;
 
     private int level;
     private float x,y;
@@ -62,19 +63,20 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         this.speed = speed;
         this.level = level;
         this.fireTime = 0.0f;
-        this.fireBitmap = new GameBitmap(R.mipmap.monbullet);
+        //this.fireBitmap = new GameBitmap(R.mipmap.monbullet);
+        this.hpBitmap= new AnimationGameBitmap(R.mipmap.monhp, FRAMES_PER_SECOND, 15);
         this.isDead = false;
         this.isMakeItem = false;
 
         // Normal Monster
         if(level < 4) {
-            this.hp = 10;
-            this.maxHp = 10;
+            this.hp = 249;
+            this.maxHp = 250;
         }
         // First Boss
        else if(level >= 4) {
-            this.hp = 1000;
-            this.maxHp = 1000;
+            this.hp = 250;
+            this.maxHp = 250;
         }
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
@@ -154,10 +156,14 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void draw(Canvas canvas) {
         if(level == 4) {
+
+            hpBitmap.drawMonsterHP(canvas,x,y+500,2,this.hp,this.maxHp);
             bitmap.drawSize(canvas,x,y,2);
         }
         // Normal Monster
         else {
+
+            hpBitmap.drawMonsterHP(canvas,x,y+150,2,this.hp,this.maxHp);
             bitmap.drawSize(canvas, x, y,4);
         }
     }

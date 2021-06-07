@@ -29,23 +29,23 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
         this.level = level;
 
         if(this.level == 1) {
-            this.power = 10;
+            this.power = 150;
             this.size = 4;
         }
         else if(this.level == 2) {
-            this.power = 30;
+            this.power = 200;
             this.size = 4;
         }
         else if(this.level == 3) {
-            this.power = 50;
+            this.power = 250;
             this.size = 4;
         }
         else if(this.level == 4) {
-            this.power = 100;
+            this.power = 280;
             this.size = 5;
         }
         else if(this.level == 5) {
-            this.power = 150;
+            this.power = 400;
             this.size = 5;
         }
 
@@ -73,29 +73,31 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
         this.level = level;
 
         if(this.level == 1) {
-            this.power = 10;
-            this.size = 4;
-        }
-        else if(this.level == 2) {
-            this.power = 30;
-            this.size = 4;
-        }
-        else if(this.level == 3) {
             this.power = 50;
             this.size = 4;
         }
+        else if(this.level == 2) {
+            this.power = 80;
+            this.size = 4;
+        }
+        else if(this.level == 3) {
+            this.power = 150;
+            this.size = 4;
+        }
         else if(this.level == 4) {
-            this.power = 100;
+            this.power = 220;
             this.size = 5;
         }
         else if(this.level == 5) {
-            this.power = 150;
+            this.power = 300;
             this.size = 5;
         }
 
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new GameBitmap(resId);
     }
+
+    public int getBulletDamage() {return this.power;}
 
     @Override
     public void getBoundingRect(RectF rect) {

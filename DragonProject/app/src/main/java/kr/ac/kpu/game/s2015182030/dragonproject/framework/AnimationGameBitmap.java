@@ -2,10 +2,14 @@ package kr.ac.kpu.game.s2015182030.dragonproject.framework;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
+import kr.ac.kpu.game.s2015182030.dragonproject.game.Item;
 import kr.ac.kpu.game.s2015182030.dragonproject.ui.view.GameView;
 
 public class AnimationGameBitmap extends GameBitmap {
+    private static final String TAG = AnimationGameBitmap.class.getSimpleName();
+
     private final int imageWidth;
     private final int imageHeight;
     private final int frameWidth;
@@ -51,6 +55,22 @@ public class AnimationGameBitmap extends GameBitmap {
     public void drawSize(Canvas canvas, float x, float y, int size) {
         int elapsed = (int)(System.currentTimeMillis() - createdOn);
         frameIndex = Math.round(elapsed * 0.001f * framesPerSecond) % frameCount;
+
+        int fw = frameWidth;
+        int h = imageHeight;
+
+        float hw = fw / 2 * size;
+        float hh = h / 2 * size;
+
+        srcRect.set(fw * frameIndex, 0, fw * frameIndex + fw, h);
+        dstRect.set(x - hw, y - hh, x + hw, y + hh);
+        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+    }
+
+    public void drawMonsterHP(Canvas canvas, float x, float y, int size,int HP, int maxHp) {
+
+        float fX = maxHp/100;
+        frameIndex = (int) (15-  ((HP*fX) /(6.66f*fX))  );
 
         int fw = frameWidth;
         int h = imageHeight;

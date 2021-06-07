@@ -55,6 +55,18 @@ public class GameBitmap {
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
 
+    public void drawMonsterHP(Canvas canvas, float x, float y, int size,int HP, int maxHp) {
+        int hw = getWidth() / 2;
+        int hh = getHeight() / 2;
+
+        float dl = x - hw * size;
+        float dt = y - hh * size;
+        float dr = x + hw * size;
+        float db = y + hh * size;
+        dstRect.set(dl, dt, dr, db);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
+    }
+
     public int getHeight() {
         return bitmap.getHeight();
     }
