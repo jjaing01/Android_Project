@@ -69,8 +69,8 @@ public class AnimationGameBitmap extends GameBitmap {
 
     public void drawMonsterHP(Canvas canvas, float x, float y, int size,int HP, int maxHp) {
 
-        float fX = maxHp/100;
-        frameIndex = (int) (15-  ((HP*fX) /(6.66f*fX))  );
+        float Ratio = (float)(HP)/(float)(maxHp) * 100.f;
+        frameIndex = (int) (15-((Ratio) /(6.66f)));
 
         int fw = frameWidth;
         int h = imageHeight;

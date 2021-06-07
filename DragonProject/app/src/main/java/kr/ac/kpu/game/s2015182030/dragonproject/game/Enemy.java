@@ -70,13 +70,13 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
         // Normal Monster
         if(level < 4) {
-            this.hp = 249;
+            this.hp = 250;
             this.maxHp = 250;
         }
         // First Boss
        else if(level >= 4) {
-            this.hp = 250;
-            this.maxHp = 250;
+            this.hp = 2250;
+            this.maxHp = 2250;
         }
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
@@ -157,7 +157,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void draw(Canvas canvas) {
         if(level == 4) {
 
-            hpBitmap.drawMonsterHP(canvas,x,y+500,2,this.hp,this.maxHp);
+            hpBitmap.drawMonsterHP(canvas,x,y+280,2,this.hp,this.maxHp);
             bitmap.drawSize(canvas,x,y,2);
         }
         // Normal Monster
