@@ -118,7 +118,6 @@ public class Player implements GameObject, BoxCollidable {
         if(this.life <= 0){
             GameOverScene over = new GameOverScene(0,0);
             game.add(MainGame.Layer.bgend, over);
-            //GameView.view.pauseGame();
         }
 
         if (tx < x) { // move left
