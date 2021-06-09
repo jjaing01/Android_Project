@@ -53,7 +53,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, enemy, bullet, player, monsterBullet, item, ui, controller, ENEMY_COUNT
+        bg1, enemy, bullet, skill, player, monsterBullet, item, ui, controller, ENEMY_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -141,7 +141,7 @@ public class MainGame {
             boolean collided = false;
 
             if (CollisionHelper.collides(item, player)) {
-                // 0: coin, 1:DualShot, 2:bullet Level, 3: Life
+                // 0: coin, 1:DualShot, 2:bullet Level, 3: Life 4:Skill
                 int itemLev = item.getLevel();
 
                 switch (itemLev) {
@@ -156,6 +156,9 @@ public class MainGame {
                         break;
                     case 3:
                         player.setLife(1);
+                        break;
+                    case 4:
+                        player.setOnSkill();
                         break;
                 }
                 remove(item, false);

@@ -15,7 +15,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     private static final String TAG = Item.class.getSimpleName();
 
     private static final int[] RESOURCE_IDS = {
-            R.mipmap.itemcoin, R.mipmap.itemdualshot, R.mipmap.itemfinal, R.mipmap.itemhp
+            R.mipmap.itemcoin, R.mipmap.itemdualshot, R.mipmap.itemfinal, R.mipmap.itemhp, R.mipmap.itembomb
     };
 
     private float x,y;
@@ -51,7 +51,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         this.speed = -speed;
         this.level = lev;
 
-        // 0: coin, 1:DualShot, 2:bullet Level, 3: Life
+        // 0: coin, 1:DualShot, 2:bullet Level, 3: Life 4: SKill
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new GameBitmap(resId);
     }
@@ -78,7 +78,10 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
 
     @Override
     public void draw(Canvas canvas) {
-        bitmap.drawSize(canvas, x, y,5);
+        if(this.level-1 == 4)
+            bitmap.drawSize(canvas, x, y,1);
+        else
+            bitmap.drawSize(canvas, x, y,5);
     }
 
     @Override

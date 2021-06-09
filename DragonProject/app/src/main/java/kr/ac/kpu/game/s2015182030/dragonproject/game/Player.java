@@ -33,6 +33,7 @@ public class Player implements GameObject, BoxCollidable {
     private int life;
     private int bulletNum;
     private int coin;
+    private boolean onSkill;
 
     public Player(float x, float y) {
         this.x = x;
@@ -40,6 +41,7 @@ public class Player implements GameObject, BoxCollidable {
         this.tx = x;
         this.ty = 0;
         this.speed = 2000;
+        this.onSkill = false;
 
         this.life = 3;
         this.bulletLevel = 1;
@@ -55,8 +57,8 @@ public class Player implements GameObject, BoxCollidable {
         this.tx = x;
     }
 
-    public void setCoin(int n) {
-        this.coin += n;
+    public void setOnSkill() {
+        this.onSkill = true;
     }
 
     public void setLife(int n) {
@@ -110,6 +112,20 @@ public class Player implements GameObject, BoxCollidable {
         if (fireTime >= FIRE_INTERVAL) {
             fireBullet();
             fireTime -= FIRE_INTERVAL;
+        }
+
+        if(this.onSkill == true) {
+            int tenth = GameView.view.getWidth()/10;
+
+            Skill skill1 = Skill.get(this.x-(2*tenth),this.y,BULLET_SPEED);
+            game.add(MainGame.Layer.skill, skill1);
+
+            Skill skill2 = Skill.get(this.x+(2*tenth),this.y,BULLET_SPEED);
+            game.add(MainGame.Layer.skill, skill2);
+
+            Skill skill3 = Skill.get(this.x,this.y-(2*tenth),BULLET_SPEED);
+            game.add(MainGame.Layer.skill, skill3);
+            this.onSkill = false;
         }
     }
 
