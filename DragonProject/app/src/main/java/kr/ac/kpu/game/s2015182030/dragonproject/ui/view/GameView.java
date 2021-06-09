@@ -11,6 +11,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
+import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.Sound;
 import kr.ac.kpu.game.s2015182030.dragonproject.game.MainGame;
 
@@ -35,7 +38,7 @@ public class GameView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         //super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(TAG, "onSize: " + w + "," + h);
+        //Log.d(TAG, "onSize: " + w + "," + h);
         MainGame game = MainGame.get();
         boolean justInitialized = game.initResources();
         if (justInitialized) {
@@ -52,7 +55,7 @@ public class GameView extends View {
 
     private void requestCallback() {
         if (!running) {
-            Log.d(TAG, "Not running. Not calling Choreographer.postFrameCallback()");
+            //Log.d(TAG, "Not running. Not calling Choreographer.postFrameCallback()");
             return;
         }
         Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
@@ -79,6 +82,18 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         MainGame game = MainGame.get();
+
+        if(running==false) {
+            game.resetPlayer();
+
+            ArrayList<GameObject> ending = game.getEnding();
+            for (GameObject o : ending) {
+                game.remove(o);
+            }
+
+            resumeGame();
+        }
+
         return game.onTouchEvent(event);
     }
 

@@ -53,7 +53,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, enemy, bullet, skill, player, monsterBullet, item, ui, controller, ENEMY_COUNT
+        bg1, bgend, enemy, bullet, skill, player, monsterBullet, item, ui, controller, ENEMY_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -93,6 +93,23 @@ public class MainGame {
         layers = new ArrayList<>();
         for (int i = 0; i < layerCount; i++) {
             layers.add(new ArrayList<>());
+        }
+    }
+
+    public ArrayList<GameObject> getEnding() {return layers.get(Layer.bgend.ordinal());}
+
+    public void resetPlayer() {
+        player.init(); money.setMoney(0); score.setScore(0);
+        ArrayList<GameObject> Generator = layers.get(Layer.controller.ordinal());
+        for (GameObject o : Generator) {
+            EnemyGenerator o2 = (EnemyGenerator)o;
+            o2.initGenerate();
+        }
+
+        ArrayList<GameObject> enemies = layers.get(Layer.enemy.ordinal());
+        for (GameObject o1 : enemies) {
+            Enemy enemy = (Enemy) o1;
+            remove(enemy);
         }
     }
 
@@ -183,7 +200,6 @@ public class MainGame {
             }
         }
 
-
         // Collide Player - Item
         for (GameObject o1 : items) {
             Item item = (Item) o1;
@@ -237,9 +253,22 @@ public class MainGame {
             }
         }
 
+        // player - monster
+        for (GameObject o1 : enemies) {
+            Enemy enemy = (Enemy) o1;
+            boolean collided = false;
 
+            if (CollisionHelper.collides(enemy, player)) {
+                player.setLife(-1);
+                remove(enemy, false);
+                collided = true;
+                break;
+            }
 
-
+            if (collided) {
+                break;
+            }
+        }
     }
 
     public void draw(Canvas canvas) {

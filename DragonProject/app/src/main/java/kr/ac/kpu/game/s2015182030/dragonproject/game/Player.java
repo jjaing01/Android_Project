@@ -2,6 +2,7 @@ package kr.ac.kpu.game.s2015182030.dragonproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import kr.ac.kpu.game.s2015182030.dragonproject.R;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.AnimationGameBitmap;
@@ -61,6 +62,22 @@ public class Player implements GameObject, BoxCollidable {
         this.onSkill = true;
     }
 
+    public void init() {
+        this.tx = x;
+        this.ty = 0;
+        this.speed = 2000;
+        this.onSkill = false;
+
+        this.life = 3;
+        this.bulletLevel = 1;
+        this.bulletNum = 1;
+        this.coin = 0;
+
+        this.planeBitmap = new AnimationGameBitmap(R.mipmap.player,FRAMES_PER_SECOND,4);
+        this.lifeBitmap = new GameBitmap(R.mipmap.hp);
+        this.fireTime = 0.0f;
+    }
+
     public void setLife(int n) {
         this.life += n;
 
@@ -99,7 +116,9 @@ public class Player implements GameObject, BoxCollidable {
         float dx = speed * game.frameTime;
 
         if(this.life <= 0){
-            GameView.view.pauseGame();
+            GameOverScene over = new GameOverScene(0,0);
+            game.add(MainGame.Layer.bgend, over);
+            //GameView.view.pauseGame();
         }
 
         if (tx < x) { // move left
@@ -156,6 +175,6 @@ public class Player implements GameObject, BoxCollidable {
             lifeBitmap.draw(canvas,w/2.5f + (i * 100),h - 100);
         }
 
-        planeBitmap.drawSize(canvas, x, y,3);
+        planeBitmap.drawSize(canvas, x, y,2);
     }
 }

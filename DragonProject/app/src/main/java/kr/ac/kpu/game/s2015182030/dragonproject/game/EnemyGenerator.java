@@ -32,6 +32,8 @@ public class EnemyGenerator implements GameObject {
         }
     }
 
+    public void initGenerate() {wave=0; bossWave = 0;}
+
     private void generate() {
         wave++;
         bossWave++;
