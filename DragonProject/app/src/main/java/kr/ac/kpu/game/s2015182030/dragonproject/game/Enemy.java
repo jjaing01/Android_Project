@@ -30,7 +30,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
     private int level;
     private float x,y;
-    private int speed;
+    private float bossY;
+    private float speed;
     private int hp,maxHp;
     private static final String TAG = Enemy.class.getSimpleName();
     private boolean isDead;
@@ -44,7 +45,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         //Log.d(TAG,"Enemy constructor");
     }
 
-    public static Enemy get(int level, int x, int y, int speed) {
+    public static Enemy get(int level, int x, int y, float speed) {
         MainGame game = MainGame.get();
         Enemy enemy = (Enemy)game.get(Enemy.class);
         if(enemy == null){
@@ -57,9 +58,10 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         return enemy;
     }
 
-    private void init(int level, int x, int y, int speed) {
+    private void init(int level, int x, int y, float speed) {
         this.x = x;
         this.y = y;
+        this.bossY = y;
         this.speed = speed;
         this.level = level;
         this.fireTime = 0.0f;
@@ -75,6 +77,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         }
         // First Boss
        else if(level >= 4) {
+           this.y = 0;
             this.hp = 2250;
             this.maxHp = 2250;
         }
@@ -94,13 +97,19 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         return isDead;
     }
 
-    private void fireBullet() {
-        MonsterBullet bullet = MonsterBullet.get(this.x, this.y, BULLET_SPEED);
-        MainGame game = MainGame.get();
-        game.add(MainGame.Layer.monsterBullet, bullet);
+    private void fireBullet(int level) {
+        if(level == 0) {
+            MonsterBullet bullet = MonsterBullet.get(this.x, this.y, BULLET_SPEED);
+            MainGame game = MainGame.get();
+            game.add(MainGame.Layer.monsterBullet, bullet);
+        }
     }
 
     private void createItem() {
+        Random randCreate = new Random();
+        int isCreate = randCreate.nextInt(5)+1;
+        if(isCreate < 4) return;
+
         Random r = new Random();
         int level = r.nextInt(4) + 1;
 
@@ -129,15 +138,19 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
         // First Boss
         if(level == 4) {
-            x += speed * game.frameTime;
+            if(y < bossY)
+                y += speed * 0.5 * game.frameTime;
+            else {
+                x += speed * game.frameTime;
 
-            if ( x <= 0 || x > GameView.view.getWidth()) {
-                speed *= -1.0;
+                if (x <= 0 || x > GameView.view.getWidth()) {
+                    speed *= -1.0;
+                }
             }
 
             fireTime += game.frameTime;
             if (fireTime >= FIRE_INTERVAL) {
-                fireBullet();
+                fireBullet(0);
                 
                 fireTime -= FIRE_INTERVAL;
             }

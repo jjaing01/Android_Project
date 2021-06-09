@@ -33,7 +33,7 @@ public class EnemyGenerator implements GameObject {
 
     private void generate() {
         wave++;
-        //Log.d(TAG,"wave:"+wave);
+        Log.d(TAG,"wave:"+wave);
 
         MainGame game = MainGame.get();
         int tenth = GameView.view.getWidth() / 10;
@@ -43,17 +43,24 @@ public class EnemyGenerator implements GameObject {
             int x = tenth * i;
             int y = 0;
 
-            int level = wave / 10 - r.nextInt(3);
+            int level = wave / 5 - r.nextInt(3);
 
             if (level < 1) level = 1;
             if (level > 3) level = 3;
 
-            Enemy enemy = Enemy.get(level, x, y, 1000);
+            float spd = (float)level/2*1500;
+            if(spd < 1000)
+                spd = 1000.f;
+
+            Enemy enemy = Enemy.get(level, x, y, spd);
             game.add(MainGame.Layer.enemy, enemy);
         }
 
+        if(wave > 18)
+            wave = 11;
+
         // First Boss
-        if(wave == 5) {
+        if(wave == 10) {
             Enemy enemy = Enemy.get(4, 5 * tenth, 500, 1000);
             game.add(MainGame.Layer.enemy, enemy);
         }
