@@ -107,6 +107,7 @@ public class MainGame {
         ArrayList<GameObject> bullets = layers.get(Layer.bullet.ordinal());
         ArrayList<GameObject> monsterBullets = layers.get(Layer.monsterBullet.ordinal());
         ArrayList<GameObject> items = layers.get(Layer.item.ordinal());
+        ArrayList<GameObject> skills = layers.get(Layer.skill.ordinal());
 
         // Collide Enemy - Bullet
         for (GameObject o1 : enemies) {
@@ -134,6 +135,54 @@ public class MainGame {
                 break;
             }
         }
+
+        // Collide Enemy - skill
+        for (GameObject o1 : enemies) {
+            Enemy enemy = (Enemy) o1;
+            boolean collided = false;
+
+            for (GameObject o2 : skills) {
+                Skill skill = (Skill) o2;
+
+                if (CollisionHelper.collides(enemy, skill)) {
+                    if(enemy.getDead() == false) {
+                        enemy.decreaseHp(300);
+                    }
+                    else {
+                        remove(enemy, false);
+                    }
+
+                    score.addScore(10);
+                    collided = true;
+                    break;
+                }
+            }
+            if (collided) {
+                break;
+            }
+        }
+
+        // Collide Enemy Bullet - skill
+        for (GameObject o1 : monsterBullets) {
+            MonsterBullet monBullet = (MonsterBullet) o1;
+            boolean collided = false;
+
+            for (GameObject o2 : skills) {
+                Skill skill = (Skill) o2;
+
+                if (CollisionHelper.collides(monBullet, skill)) {
+                    remove(monBullet, false);
+
+                    score.addScore(10);
+                    collided = true;
+                    break;
+                }
+            }
+            if (collided) {
+                break;
+            }
+        }
+
 
         // Collide Player - Item
         for (GameObject o1 : items) {

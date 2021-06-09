@@ -71,15 +71,23 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         this.isMakeItem = false;
 
         // Normal Monster
-        if(level < 4) {
+        if(level == 1) {
             this.hp = 250;
             this.maxHp = 250;
+        }
+        else if(level == 2){
+            this.hp = 1050;
+            this.maxHp = 1050;
+        }
+        else if(level == 3){
+            this.hp = 850;
+            this.maxHp = 850;
         }
         // First Boss
        else if(level >= 4) {
            this.y = 0;
-            this.hp = 22500;
-            this.maxHp = 22500;
+            this.hp = 30000;
+            this.maxHp = 30000;
         }
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);

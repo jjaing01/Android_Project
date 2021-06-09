@@ -98,6 +98,10 @@ public class Player implements GameObject, BoxCollidable {
         MainGame game = MainGame.get();
         float dx = speed * game.frameTime;
 
+        if(this.life <= 0){
+            GameView.view.pauseGame();
+        }
+
         if (tx < x) { // move left
             dx = -dx;
         }
@@ -117,13 +121,13 @@ public class Player implements GameObject, BoxCollidable {
         if(this.onSkill == true) {
             int tenth = GameView.view.getWidth()/10;
 
-            Skill skill1 = Skill.get(this.x-(2*tenth),this.y,BULLET_SPEED);
+            Skill skill1 = Skill.get(this.x-(2.5f*tenth),this.y,BULLET_SPEED);
             game.add(MainGame.Layer.skill, skill1);
 
-            Skill skill2 = Skill.get(this.x+(2*tenth),this.y,BULLET_SPEED);
+            Skill skill2 = Skill.get(this.x+(2.5f*tenth),this.y,BULLET_SPEED);
             game.add(MainGame.Layer.skill, skill2);
 
-            Skill skill3 = Skill.get(this.x,this.y-(2*tenth),BULLET_SPEED);
+            Skill skill3 = Skill.get(this.x,this.y-(2.5f*tenth),BULLET_SPEED);
             game.add(MainGame.Layer.skill, skill3);
             this.onSkill = false;
         }
@@ -133,10 +137,11 @@ public class Player implements GameObject, BoxCollidable {
         MainGame game = MainGame.get();
 
         if(this.bulletNum > 1) {
-            Bullet bullet1 = Bullet.get(this.bulletLevel, this.x - 50, this.y, BULLET_SPEED);
+            int tenth = GameView.view.getWidth()/10;
+            Bullet bullet1 = Bullet.get(this.bulletLevel, this.x - (tenth), this.y, BULLET_SPEED);
             game.add(MainGame.Layer.bullet, bullet1);
 
-            Bullet bullet2 = Bullet.get(this.bulletLevel, this.x + 50, this.y, BULLET_SPEED);
+            Bullet bullet2 = Bullet.get(this.bulletLevel, this.x + (tenth), this.y, BULLET_SPEED);
             game.add(MainGame.Layer.bullet, bullet2);
         }
         else {
