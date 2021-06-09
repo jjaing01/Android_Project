@@ -16,31 +16,34 @@ public class MonsterBullet implements GameObject, BoxCollidable, Recyclable {
     private final GameBitmap bitmap;
     private float y;
     private int speed;
+    private float angle;
 
-    private MonsterBullet(float x, float y, int speed) {
+    private MonsterBullet(float x, float y, int speed,float angle) {
         this.x = x;
         this.y = y;
+        this.angle = angle;
         this.speed = -speed;
 
         this.bitmap = new GameBitmap(R.mipmap.monbullet);
     }
 
-    public static MonsterBullet get(float x, float y, int speed) {
+    public static MonsterBullet get(float x, float y, int speed, float angle) {
         MainGame game = MainGame.get();
         MonsterBullet bullet = (MonsterBullet) game.get(MonsterBullet.class);
 
         if (bullet == null) {
-            return new MonsterBullet(x, y, speed);
+            return new MonsterBullet(x, y, speed, angle);
         }
 
-        bullet.init(x, y, speed);
+        bullet.init(x, y, speed, angle);
         return bullet;
     }
 
-    private void init(float x, float y, int speed) {
+    private void init(float x, float y, int speed, float angle) {
         this.x = x;
         this.y = y;
         this.speed = -speed;
+        this.angle = angle;
     }
 
     @Override
@@ -51,7 +54,9 @@ public class MonsterBullet implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void update() {
         MainGame game = MainGame.get();
-        y -= speed * game.frameTime;
+
+        x += Math.cos(this.angle* 3.141592 / 180.f) * speed * game.frameTime;
+        y -= Math.sin(this.angle* 3.141592 / 180.f) * speed * game.frameTime;
 
         if (y > GameView.view.getHeight() || y < 0
                 || x > GameView.view.getWidth() || x < 0) {

@@ -14,6 +14,7 @@ public class EnemyGenerator implements GameObject {
     private float time;
     private float spawnInterval;
     private int wave;
+    private int bossWave;
 
     public EnemyGenerator() {
         time = INITIAL_SPAWN_INTERVAL;
@@ -33,7 +34,8 @@ public class EnemyGenerator implements GameObject {
 
     private void generate() {
         wave++;
-        Log.d(TAG,"wave:"+wave);
+        bossWave++;
+        //Log.d(TAG,"wave:"+wave);
 
         MainGame game = MainGame.get();
         int tenth = GameView.view.getWidth() / 10;
@@ -60,7 +62,7 @@ public class EnemyGenerator implements GameObject {
             wave = 11;
 
         // First Boss
-        if(wave == 10) {
+        if(bossWave == 10 || bossWave == 20) {
             Enemy enemy = Enemy.get(4, 5 * tenth, 500, 1000);
             game.add(MainGame.Layer.enemy, enemy);
         }

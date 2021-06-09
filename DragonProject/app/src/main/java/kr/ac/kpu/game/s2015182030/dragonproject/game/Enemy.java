@@ -78,8 +78,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         // First Boss
        else if(level >= 4) {
            this.y = 0;
-            this.hp = 2250;
-            this.maxHp = 2250;
+            this.hp = 22500;
+            this.maxHp = 22500;
         }
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
@@ -99,9 +99,25 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
     private void fireBullet(int level) {
         if(level == 0) {
-            MonsterBullet bullet = MonsterBullet.get(this.x, this.y, BULLET_SPEED);
+            MonsterBullet bullet = MonsterBullet.get(this.x, this.y, BULLET_SPEED,90);
             MainGame game = MainGame.get();
             game.add(MainGame.Layer.monsterBullet, bullet);
+        }
+
+        else if(level == 1){
+            for(int i = 1; i < 4; ++i){
+                MonsterBullet bullet = MonsterBullet.get(this.x, this.y, BULLET_SPEED,45*i);
+                MainGame game = MainGame.get();
+                game.add(MainGame.Layer.monsterBullet, bullet);
+            }
+        }
+
+        else if(level == 2){
+            for(int i = 0; i < 10; ++i){
+                MonsterBullet bullet = MonsterBullet.get(this.x, this.y, 900,25*i);
+                MainGame game = MainGame.get();
+                game.add(MainGame.Layer.monsterBullet, bullet);
+            }
         }
     }
 
@@ -150,7 +166,15 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
             fireTime += game.frameTime;
             if (fireTime >= FIRE_INTERVAL) {
-                fireBullet(0);
+                Random randLev = new Random();
+                int lev=0;
+
+                if((float)hp/(float)maxHp*100.f < 80 && (float)hp/(float)maxHp * 100.f > 50)
+                    lev=randLev.nextInt(2);
+                else if((float)hp/(float)maxHp * 100.f < 50)
+                    lev=randLev.nextInt(3);
+
+                fireBullet(lev);
                 
                 fireTime -= FIRE_INTERVAL;
             }
