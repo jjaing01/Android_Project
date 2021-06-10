@@ -163,7 +163,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         // First Boss
         if(level == 4) {
             if(y < bossY)
-                y += speed * 0.5 * game.frameTime;
+                y += speed * 0.3 * game.frameTime;
             else {
                 x += speed * game.frameTime;
 
@@ -209,7 +209,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         else {
 
             hpBitmap.drawMonsterHP(canvas,x,y+150,2,this.hp,this.maxHp);
-            bitmap.drawSize(canvas, x, y,4);
+            bitmap.drawSize(canvas, x, y,3);
         }
     }
 

@@ -174,6 +174,6 @@ public class Player implements GameObject, BoxCollidable {
             lifeBitmap.draw(canvas,w/2.5f + (i * 100),h - 100);
         }
 
-        planeBitmap.drawSize(canvas, x, y,3);
+        planeBitmap.drawSize(canvas, x, y,2);
     }
 }

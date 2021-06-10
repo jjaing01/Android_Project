@@ -71,7 +71,7 @@ public class EnemyGenerator implements GameObject {
 
         // First Boss
         if(bossWave % 10 == 0) {
-            Enemy enemy = Enemy.get(4, 5 * tenth, 500, 1000, monsetting);
+            Enemy enemy = Enemy.get(4, 5 * tenth, 400, 1000, monsetting);
             game.add(MainGame.Layer.enemy, enemy);
         }
     }

@@ -81,7 +81,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         if(this.level-1 == 4)
             bitmap.drawSize(canvas, x, y,1);
         else
-            bitmap.drawSize(canvas, x, y,5);
+            bitmap.drawSize(canvas, x, y,3);
     }
 
     @Override
