@@ -54,7 +54,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, bgend, enemy, bullet, skill, player, monsterBullet, item, ui, controller, ENEMY_COUNT
+        bg1, enemy, bullet, skill, player, monsterBullet, item, ui, controller, bgend, ENEMY_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -86,6 +86,8 @@ public class MainGame {
         HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.scene01, 100);
         add(Layer.bg1, bg);
 
+        Sound.play(R.raw.bgm,100);
+
         initialized = true;
         return true;
     }
@@ -115,8 +117,6 @@ public class MainGame {
     }
 
     public void update() {
-        //Sound.play(R.raw.)
-
         for (ArrayList<GameObject> objects : layers) {
             for (GameObject o : objects) {
                 o.update();
@@ -142,6 +142,7 @@ public class MainGame {
                         enemy.decreaseHp(bullet.getBulletDamage());
                     }
                     else {
+                        Sound.play(R.raw.mondie,1);
                         remove(enemy, false);
                     }
 

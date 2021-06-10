@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.game.s2015182030.dragonproject.R;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.Sound;
 import kr.ac.kpu.game.s2015182030.dragonproject.game.MainGame;
@@ -22,7 +23,6 @@ public class GameView extends View {
 
     public static float MULTIPLIER = 2;
     private boolean running;
-    //    private Ball b1, b2;
 
     private long lastFrame;
     public static GameView view;
@@ -37,8 +37,6 @@ public class GameView extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        //super.onSizeChanged(w, h, oldw, oldh);
-        //Log.d(TAG, "onSize: " + w + "," + h);
         MainGame game = MainGame.get();
         boolean justInitialized = game.initResources();
         if (justInitialized) {
@@ -49,7 +47,6 @@ public class GameView extends View {
     private void update() {
         MainGame game = MainGame.get();
         game.update();
-
         invalidate();
     }
 
