@@ -59,8 +59,8 @@ public class EnemyGenerator implements GameObject {
             float spd = (float)level/2*1300;
             if(spd < 1000)
                 spd = 1000.f;
-            else if(spd > 2000.f)
-                spd = 1500.f;
+            else if(spd > 1300.f)
+                spd = 1300.f;
 
             Enemy enemy = Enemy.get(level, x, y, spd, monsetting);
             game.add(MainGame.Layer.enemy, enemy);
@@ -71,7 +71,7 @@ public class EnemyGenerator implements GameObject {
 
         // First Boss
         if(bossWave % 10 == 0) {
-            Enemy enemy = Enemy.get(4, 5 * tenth, 400, 1000, monsetting);
+            Enemy enemy = Enemy.get(4, 5 * tenth, 300, 1000, monsetting);
             game.add(MainGame.Layer.enemy, enemy);
         }
     }
