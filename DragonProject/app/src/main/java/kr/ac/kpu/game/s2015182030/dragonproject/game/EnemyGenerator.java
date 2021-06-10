@@ -56,11 +56,11 @@ public class EnemyGenerator implements GameObject {
             if (level < 1) level = 1;
             if (level > 3) level = 3;
 
-            float spd = (float)level/2*1500;
+            float spd = (float)level/2*1300;
             if(spd < 1000)
                 spd = 1000.f;
             else if(spd > 2000.f)
-                spd = 1800.f;
+                spd = 1500.f;
 
             Enemy enemy = Enemy.get(level, x, y, spd, monsetting);
             game.add(MainGame.Layer.enemy, enemy);

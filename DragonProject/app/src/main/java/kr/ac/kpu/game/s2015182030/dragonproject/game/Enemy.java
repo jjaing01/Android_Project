@@ -167,7 +167,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             else {
                 x += speed * game.frameTime;
 
-                if (x <= 0 || x > GameView.view.getWidth()) {
+                if (x <= 50 || x > GameView.view.getWidth()-50) {
                     speed *= -1.0;
                 }
             }
