@@ -39,6 +39,10 @@ public class EnemyGenerator implements GameObject {
         bossWave++;
         //Log.d(TAG,"wave:"+wave);
 
+        int monsetting = bossWave / 10;
+        if(monsetting < 1)
+            monsetting = 1;
+
         MainGame game = MainGame.get();
         int tenth = GameView.view.getWidth() / 10;
 
@@ -58,7 +62,7 @@ public class EnemyGenerator implements GameObject {
             else if(spd > 2000.f)
                 spd = 1800.f;
 
-            Enemy enemy = Enemy.get(level, x, y, spd);
+            Enemy enemy = Enemy.get(level, x, y, spd, monsetting);
             game.add(MainGame.Layer.enemy, enemy);
         }
 
@@ -67,7 +71,7 @@ public class EnemyGenerator implements GameObject {
 
         // First Boss
         if(bossWave % 10 == 0) {
-            Enemy enemy = Enemy.get(4, 5 * tenth, 500, 1000);
+            Enemy enemy = Enemy.get(4, 5 * tenth, 500, 1000, monsetting);
             game.add(MainGame.Layer.enemy, enemy);
         }
     }

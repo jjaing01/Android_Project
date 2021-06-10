@@ -29,19 +29,19 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
         this.level = level;
 
         if(this.level == 1) {
-            this.power = 150;
+            this.power = 170;
             this.size = 4;
         }
         else if(this.level == 2) {
-            this.power = 200;
+            this.power = 230;
             this.size = 4;
         }
         else if(this.level == 3) {
-            this.power = 250;
+            this.power = 280;
             this.size = 4;
         }
         else if(this.level == 4) {
-            this.power = 280;
+            this.power = 330;
             this.size = 5;
         }
         else if(this.level == 5) {

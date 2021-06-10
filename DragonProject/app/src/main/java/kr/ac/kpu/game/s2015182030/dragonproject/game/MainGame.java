@@ -11,6 +11,7 @@ import kr.ac.kpu.game.s2015182030.dragonproject.R;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182030.dragonproject.framework.Recyclable;
+import kr.ac.kpu.game.s2015182030.dragonproject.framework.Sound;
 import kr.ac.kpu.game.s2015182030.dragonproject.ui.view.GameView;
 import kr.ac.kpu.game.s2015182030.dragonproject.utils.CollisionHelper;
 
@@ -114,6 +115,8 @@ public class MainGame {
     }
 
     public void update() {
+        //Sound.play(R.raw.)
+
         for (ArrayList<GameObject> objects : layers) {
             for (GameObject o : objects) {
                 o.update();

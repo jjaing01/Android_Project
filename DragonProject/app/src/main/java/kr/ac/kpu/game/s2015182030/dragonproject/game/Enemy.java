@@ -45,49 +45,49 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         //Log.d(TAG,"Enemy constructor");
     }
 
-    public static Enemy get(int level, int x, int y, float speed) {
+    public static Enemy get(int level, int x, int y, float speed, int wave) {
         MainGame game = MainGame.get();
         Enemy enemy = (Enemy)game.get(Enemy.class);
         if(enemy == null){
             enemy = new Enemy();
-            enemy.init(level, x, y, speed);
+            enemy.init(level, x, y, speed, wave);
             return enemy;
         }
 
-        enemy.init(level, x, y, speed);
+        enemy.init(level, x, y, speed, wave);
         return enemy;
     }
 
-    private void init(int level, int x, int y, float speed) {
+    private void init(int level, int x, int y, float speed, int wave) {
         this.x = x;
         this.y = y;
         this.bossY = y;
         this.speed = speed;
         this.level = level;
         this.fireTime = 0.0f;
-        //this.fireBitmap = new GameBitmap(R.mipmap.monbullet);
+
         this.hpBitmap= new AnimationGameBitmap(R.mipmap.monhp, FRAMES_PER_SECOND, 15);
         this.isDead = false;
         this.isMakeItem = false;
 
         // Normal Monster
         if(level == 1) {
-            this.hp = 250;
-            this.maxHp = 250;
+            this.hp = 250 * wave;
+            this.maxHp = 250 * wave;
         }
         else if(level == 2){
-            this.hp = 1050;
-            this.maxHp = 1050;
+            this.hp = 1050 * wave;
+            this.maxHp = 1050 * wave;
         }
         else if(level == 3){
-            this.hp = 850;
-            this.maxHp = 850;
+            this.hp = 850 * wave;
+            this.maxHp = 850 * wave;
         }
         // First Boss
        else if(level >= 4) {
            this.y = 0;
-            this.hp = 30000;
-            this.maxHp = 30000;
+            this.hp = 30000 * wave;
+            this.maxHp = 30000 * wave;
         }
         int resId = RESOURCE_IDS[level - 1];
         this.bitmap = new AnimationGameBitmap(resId, FRAMES_PER_SECOND, 4);
