@@ -165,11 +165,21 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             if(y < bossY)
                 y += speed * 0.3 * game.frameTime;
             else {
-                x += speed * game.frameTime;
+                x += speed * 0.3 * game.frameTime;
 
-                if (x <= 50 || x > GameView.view.getWidth()-50) {
+                if (x <= 200){
                     speed *= -1.0;
+                    if(speed < 0)
+                        speed *= -1.0;
                 }
+                else if(x > GameView.view.getWidth()-250){
+                    speed *= -1.0;
+                    if(speed > 0)
+                        speed *= -1.0;
+                }
+//                if (x <= 200 || x > GameView.view.getWidth()-250) {
+//                    speed *= -1.0;
+//                }
             }
 
             fireTime += game.frameTime;
@@ -208,7 +218,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         // Normal Monster
         else {
 
-            hpBitmap.drawMonsterHP(canvas,x,y+150,2,this.hp,this.maxHp);
+            hpBitmap.drawMonsterHP(canvas,x,y+150,1,this.hp,this.maxHp);
             bitmap.drawSize(canvas, x, y,3);
         }
     }
