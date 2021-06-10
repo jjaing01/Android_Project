@@ -86,7 +86,8 @@ public class MainGame {
         HorizontalScrollBackground bg = new HorizontalScrollBackground(R.mipmap.scene01, 100);
         add(Layer.bg1, bg);
 
-        Sound.play(R.raw.bgm,100);
+        //Sound.play(R.raw.bgm,100);
+        GameView.view.mediaPlayer.start();
 
         initialized = true;
         return true;
@@ -114,6 +115,7 @@ public class MainGame {
             Enemy enemy = (Enemy) o1;
             remove(enemy);
         }
+        GameView.view.mediaPlayer.seekTo(0);
     }
 
     public void update() {
@@ -170,6 +172,7 @@ public class MainGame {
                         enemy.decreaseHp(300);
                     }
                     else {
+                        Sound.play(R.raw.mondie,1);
                         remove(enemy, false);
                     }
 

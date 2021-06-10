@@ -2,6 +2,7 @@ package kr.ac.kpu.game.s2015182030.dragonproject.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -26,12 +27,14 @@ public class GameView extends View {
 
     private long lastFrame;
     public static GameView view;
+    public MediaPlayer mediaPlayer;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         GameView.view = this;
         Sound.init(context);
         running = true;
+        mediaPlayer= MediaPlayer.create(context, R.raw.bgm);
 //        startUpdating();
     }
 
